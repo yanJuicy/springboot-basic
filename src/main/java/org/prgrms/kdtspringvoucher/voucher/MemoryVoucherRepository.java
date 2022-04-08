@@ -1,8 +1,11 @@
 package org.prgrms.kdtspringvoucher.voucher;
 
+import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class MemoryVoucherRepository implements VoucherRepository {
 
     private static final List<Voucher> voucherList = new ArrayList<>();

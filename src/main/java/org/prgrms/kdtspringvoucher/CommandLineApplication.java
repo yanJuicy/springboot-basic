@@ -8,14 +8,17 @@ import org.prgrms.kdtspringvoucher.voucher.PercentAmountVoucher;
 import org.prgrms.kdtspringvoucher.voucher.Voucher;
 import org.prgrms.kdtspringvoucher.voucher.VoucherService;
 import org.prgrms.kdtspringvoucher.voucher.VoucherStatus;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.List;
 import java.util.UUID;
 
+@SpringBootApplication
 public class CommandLineApplication {
 
     public static void main(String[] args) {
+//        new SpringApplication().run(args);
         new CommandLineApplication().run();
     }
 
