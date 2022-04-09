@@ -2,6 +2,7 @@ package org.prgrms.kdtspringvoucher.voucher;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.prgrms.kdtspringvoucher.voucher.model.FixedAmountVoucher;
 
 import java.util.UUID;
 
