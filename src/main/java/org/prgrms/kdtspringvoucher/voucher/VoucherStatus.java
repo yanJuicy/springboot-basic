@@ -2,7 +2,8 @@ package org.prgrms.kdtspringvoucher.voucher;
 
 public enum VoucherStatus {
     FIXED,
-    PERCENT;
+    PERCENT,
+    WRONG;
 
     public static VoucherStatus getVoucherStatus(String s) {
         switch (s) {
@@ -11,7 +12,7 @@ public enum VoucherStatus {
             case "percent":
                 return PERCENT;
             default:
-                return null;
+                return WRONG;
         }
     }
 }

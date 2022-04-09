@@ -1,11 +1,12 @@
 package org.prgrms.kdtspringvoucher;
 
-public enum Command {
+public enum CommandStatus {
     EXIT,
     CREATE,
-    LIST ;
+    LIST,
+    WRONG;
 
-    public static Command getCommand(String s) {
+    public static CommandStatus getCommand(String s) {
         switch (s) {
             case "exit":
                 return EXIT;
@@ -14,7 +15,7 @@ public enum Command {
             case "list":
                 return LIST;
             default:
-                return null;
+                return WRONG;
         }
     }
 }
