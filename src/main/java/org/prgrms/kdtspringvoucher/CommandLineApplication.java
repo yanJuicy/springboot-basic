@@ -8,31 +8,32 @@ import org.prgrms.kdtspringvoucher.voucher.PercentAmountVoucher;
 import org.prgrms.kdtspringvoucher.voucher.Voucher;
 import org.prgrms.kdtspringvoucher.voucher.VoucherService;
 import org.prgrms.kdtspringvoucher.voucher.VoucherStatus;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.List;
 import java.util.UUID;
 
-@SpringBootApplication
 public class CommandLineApplication {
 
+    private static final Logger logger = LoggerFactory.getLogger(CommandLineApplication.class);
+
     public static void main(String[] args) {
-//        new SpringApplication().run(args);
         new CommandLineApplication().run();
     }
 
     public void run() {
         AnnotationConfigApplicationContext context =
                 new AnnotationConfigApplicationContext(AppConfig.class);
-
         VoucherService voucherService = context.getBean(VoucherService.class);
         Console console = new Console();
 
         boolean isExit = false;
         while (!isExit) {
             showMenu(console);
-            Command command = Command.getCommand(inputCommand(console));
+            String cmd = inputCommand(console);
+            CommandStatus command = CommandStatus.getCommand(cmd);
             switch (command) {
                 case EXIT:
                     isExit = true;
@@ -44,20 +45,22 @@ public class CommandLineApplication {
                     showPresentVoucherList(console, voucherService);
                     break;
                 default:
-                    console.output("잘못된 입력!");
+                    logger.error("잘못된 명령어 입력: {}", cmd);
                     break;
             }
+            console.output("\n");
         }
     }
 
     private void showPresentVoucherList(Output output, VoucherService voucherService) {
         List<Voucher> vouchers = voucherService.getVouchers();
+        output.output("바우처 리스트");
         for (Voucher voucher : vouchers) {
             output.output(voucher.toString());
         }
     }
 
-    private void createVoucher(Input input, Output output,  VoucherService voucherService) {
+    private void createVoucher(Input input, Output output, VoucherService voucherService) {
         String cmd = input.inputCommand("Type fixed or percent: ");
 
         VoucherStatus voucherStatus = VoucherStatus.getVoucherStatus(cmd);
@@ -69,7 +72,7 @@ public class CommandLineApplication {
                 voucherService.save(new PercentAmountVoucher(UUID.randomUUID(), 50));
                 break;
             default:
-                output.output("잘못된 입력! fixed or percent 입력");
+                logger.error("잘못된 바우처 타입 입력: {}", cmd);
                 break;
         }
     }
